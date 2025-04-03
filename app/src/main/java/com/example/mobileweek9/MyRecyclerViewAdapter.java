@@ -1,6 +1,7 @@
 package com.example.mobileweek9;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +42,14 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter {
         holder.tv_Calories.setText(item.getCalories()+"");
         holder.tv_Carbs.setText(item.getCarbs()+"");
         holder.tv_fiber.setText(item.getFiber()+"");
+
+        holder.itemView.setOnClickListener(v -> process_update(position));
+    }
+
+    private void process_update(int position) {
+        Intent intent = new Intent(context, ModifyFruit.class);
+        intent.putExtra("position", position);
+        context.startActivity(intent);
     }
 
     @Override

@@ -1,8 +1,7 @@
 package com.example.mobileweek9;
 
-import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -10,13 +9,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private ListView listView;
-    private MyCustomAdapter adapter;
+    private RecyclerView recyclerView;
+    private MyRecyclerViewAdapter adapter;
     public static List<Fruit> itemList;
 
     @Override
@@ -30,20 +31,19 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        listView = findViewById(R.id.listView);
+        recyclerView = findViewById(R.id.recyclerView);
         itemList = FruitsFactory.getFruits();
 
 
         // Set the adapter
-        adapter = new MyCustomAdapter(this, itemList);
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener((a, b, position, d) -> procces_update(position));
-    }
+        adapter = new MyRecyclerViewAdapter(this, itemList);
+        recyclerView.setAdapter(adapter);
 
-    private void procces_update(int position) {
-        Intent intent = new Intent(this, ModifyFruit.class);
-        intent.putExtra("position", position);
-        startActivity(intent);
+        int orientation = getResources().getConfiguration().orientation;
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE)
+            recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        else
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     @Override
