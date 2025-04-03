@@ -6,7 +6,7 @@
     android:id="@+id/main"
     android:padding="16dp">
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
